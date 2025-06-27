@@ -1,0 +1,2 @@
+C:\Users\jtoribio\Desktop\UTRA25\cubeOperationTest\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\jtoribio\Desktop\UTRA25\cubeOperationTest\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<robot name="spot">
+  <link name="body">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/body.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/body_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="base_link" />
+  <link name="front_rail" />
+  <link name="rear_rail" />
+  <link name="front_left_hip">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/front_left_hip.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/front_left_hip_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="front_left_upper_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/front_left_upper_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/front_left_upper_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="front_left_lower_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/front_left_lower_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/front_left_lower_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="front_right_hip">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/front_right_hip.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/front_right_hip_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="front_right_upper_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/front_right_upper_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/front_right_upper_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="front_right_lower_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/front_right_lower_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/front_right_lower_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rear_left_hip">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <origin rpy="-6.279294 6.280347 -0.002002" xyz="-2.3E-05 4.8E-05 -0.000113" />
+      <geometry>
+        <mesh filename="package://meshes/rear_left_hip.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/rear_left_hip_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rear_left_upper_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/rear_left_upper_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/rear_left_upper_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rear_left_lower_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/rear_left_lower_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/rear_left_lower_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rear_right_hip">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/rear_right_hip.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/rear_right_hip_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rear_right_upper_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/rear_right_upper_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/rear_right_upper_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="rear_right_lower_leg">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/rear_right_lower_leg.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://meshes/rear_right_lower_leg_collision.stl" scale="1 1 1" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="arm0.link_sh0">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.9046989679" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_sh0.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="arm0.link_sh1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.8570194244" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_sh1.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_hr0.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="arm0.link_el0">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="0.9483195543" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_el0.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="arm0.link_el1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="1.0175482035" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_el1.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="arm0.link_wr0">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="0.5826374292" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_wr0.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="arm0.link_wr1">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="0.9333530068" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_wr1.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="arm0.link_fngr">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <mass value="0.2238331437" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://meshes/arm0_link_fngr.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+  </link>
+  <joint name="spot_body_joint" type="fixed">
+    <parent link="spot" />
+    <child link="body" />
+  </joint>
+  <joint name="body_base_link_joint" type="fixed">
+    <parent link="body" />
+    <child link="base_link" />
+  </joint>
+  <joint name="body_front_rail_joint" type="fixed">
+    <origin xyz="0.223 0 0.0805" />
+    <parent link="body" />
+    <child link="front_rail" />
+  </joint>
+  <joint name="body_rear_rail_joint" type="fixed">
+    <origin xyz="-0.223 0 0.0805" />
+    <parent link="body" />
+    <child link="rear_rail" />
+  </joint>
+  <joint name="front_left_hip_x" type="revolute">
+    <origin xyz="0.29785 0.055 0" />
+    <parent link="body" />
+    <child link="front_left_hip" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.785398" upper="0.785398" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="front_left_hip_y" type="revolute">
+    <origin xyz="0 0.110945 0" />
+    <parent link="front_left_hip" />
+    <child link="front_left_upper_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.898845" upper="2.295108" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="front_left_knee" type="revolute">
+    <origin xyz="0.025 0 -0.3205" />
+    <parent link="front_left_upper_leg" />
+    <child link="front_left_lower_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-2.7929" upper="-0.254801" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="front_right_hip_x" type="revolute">
+    <origin xyz="0.29785 -0.055 0" />
+    <parent link="body" />
+    <child link="front_right_hip" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.785398" upper="0.785398" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="front_right_hip_y" type="revolute">
+    <origin xyz="0 -0.110945 0" />
+    <parent link="front_right_hip" />
+    <child link="front_right_upper_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.898845" upper="2.295108" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="front_right_knee" type="revolute">
+    <origin xyz="0.025 0 -0.3205" />
+    <parent link="front_right_upper_leg" />
+    <child link="front_right_lower_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-2.7929" upper="-0.247563" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="rear_left_hip_x" type="revolute">
+    <origin xyz="-0.29785 0.055 0" />
+    <parent link="body" />
+    <child link="rear_left_hip" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.785398" upper="0.785398" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="rear_left_hip_y" type="revolute">
+    <origin xyz="0 0.110945 0" />
+    <parent link="rear_left_hip" />
+    <child link="rear_left_upper_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.898845" upper="2.295108" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="rear_left_knee" type="revolute">
+    <origin xyz="0.025 0 -0.3205" />
+    <parent link="rear_left_upper_leg" />
+    <child link="rear_left_lower_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-2.7929" upper="-0.267153" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="rear_right_hip_x" type="revolute">
+    <origin xyz="-0.29785 -0.055 0" />
+    <parent link="body" />
+    <child link="rear_right_hip" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.785398" upper="0.785398" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="rear_right_hip_y" type="revolute">
+    <origin xyz="0 -0.110945 0" />
+    <parent link="rear_right_hip" />
+    <child link="rear_right_upper_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.898845" upper="2.295108" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="rear_right_knee" type="revolute">
+    <origin xyz="0.025 0 -0.3205" />
+    <parent link="rear_right_upper_leg" />
+    <child link="rear_right_lower_leg" />
+    <axis xyz="0 1 0" />
+    <limit lower="-2.7929" upper="-0.257725" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_shoulder_0" type="revolute">
+    <origin xyz="0.292 0 0.188" />
+    <parent link="body" />
+    <child link="arm0.link_sh0" />
+    <axis xyz="0 0 1" />
+    <dynamics friction="10" />
+    <limit lower="-2.61799" upper="3.14159" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_shoulder_1" type="revolute">
+    <parent link="arm0.link_sh0" />
+    <child link="arm0.link_sh1" />
+    <axis xyz="0 1 0" />
+    <dynamics friction="10" />
+    <limit lower="-3.14159" upper="0.523599" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_elbow_0" type="revolute">
+    <origin xyz="0.3385 0 0" />
+    <parent link="arm0.link_sh1" />
+    <child link="arm0.link_el0" />
+    <axis xyz="0 1 0" />
+    <dynamics friction="10" />
+    <limit lower="0" upper="3.14159" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_elbow_1" type="revolute">
+    <origin xyz="0.4033 0 0.075" />
+    <parent link="arm0.link_el0" />
+    <child link="arm0.link_el1" />
+    <axis xyz="1 0 0" />
+    <dynamics friction="10" />
+    <limit lower="-2.79253" upper="2.79253" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_wrist_0" type="revolute">
+    <parent link="arm0.link_el1" />
+    <child link="arm0.link_wr0" />
+    <axis xyz="0 1 0" />
+    <dynamics friction="10" />
+    <limit lower="-1.8326" upper="1.8326" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_wrist_1" type="revolute">
+    <parent link="arm0.link_wr0" />
+    <child link="arm0.link_wr1" />
+    <axis xyz="1 0 0" />
+    <dynamics friction="10" />
+    <limit lower="-2.87989" upper="2.87979" effort="1000" velocity="1000" />
+  </joint>
+  <joint name="arm_f1x" type="revolute">
+    <origin xyz="0.11745 0 0.01482" />
+    <parent link="arm0.link_wr1" />
+    <child link="arm0.link_fngr" />
+    <axis xyz="0 1 0" />
+    <dynamics friction="10" />
+    <limit lower="-1.5708" upper="0" effort="1000" velocity="1000" />
+  </joint>
+</robot>
