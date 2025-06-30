@@ -5,6 +5,7 @@ using UnityEngine;
 public class BotControl : MonoBehaviour
 {
     public bool isRightControl;
+    OVRInput.Controller controller;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +39,11 @@ public class BotControl : MonoBehaviour
         if (rotate)
         {
             transform.Rotate(Vector3.up, move.x * Time.deltaTime * 100f);
+            OVRInput.SetControllerVibration(0.5f, 0.7f, controller);
         }
         else
         {
+            OVRInput.SetControllerVibration(0, 0, controller);
             if (Mathf.Abs(move.y) >= Mathf.Abs(move.x))
             {
                 transform.position += transform.forward * move.y * 2f * Time.deltaTime;
