@@ -1,14 +1,18 @@
 ﻿<Properties StartupConfiguration="{B2ECCD88-E2E6-8228-5619-6F612BF1B5CC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AudioCues.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Labeller.cs">
     <Files>
       <File FileName="Assets/AudioCues.cs" Line="38" Column="1" />
+      <File FileName="Assets/SmoothLocomotion.cs" Line="1" Column="1" />
+      <File FileName="Assets/ShowWhenLookedAt.cs" Line="32" Column="49" />
+      <File FileName="Assets/BotControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Labeller.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="cubeOperationTest" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="AudioCues.cs" selected="True" />
+              <Node name="Labeller.cs" selected="True" />
             </Node>
           </Node>
         </State>

@@ -20,13 +20,15 @@ public class ShowWhenLookedAt : MonoBehaviour
         //float dot = Vector3.Dot(toHand, head.forward);
         //canvas.enabled = dot > 0.9f;
 
-        if (whichOne == 0)
-        {
-            canvas.enabled = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
-        }
-        else
-        {
-            canvas.enabled = OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
-        }
+        //if (whichOne == 0)
+        //{
+        //    canvas.enabled = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+        //}
+        //else
+        //{
+        //    canvas.enabled = OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
+        //}
+
+        transform.LookAt(Camera.main.transform);
     }
 }
