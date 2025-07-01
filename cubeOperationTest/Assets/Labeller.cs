@@ -47,10 +47,15 @@ public class Labeller : MonoBehaviour
         }
 
         Vector3 toController = (controller.position - Camera.main.transform.position).normalized;
-        float gazeDelta = Vector3.Angle(Camera.main.transform.forward, toController);
+        float gazeDelta = Vector3.Angle(RemoveY(Camera.main.transform.forward), RemoveY(toController));
         foreach (Transform label in labels)
         {
             label.gameObject.SetActive(gazeDelta <= 15f);
         }
+    }
+
+    private Vector3 RemoveY(Vector3 src)
+    {
+        return new Vector3(src.x, 0f, src.z);
     }
 }

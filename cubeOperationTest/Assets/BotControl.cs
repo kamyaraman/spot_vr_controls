@@ -34,11 +34,11 @@ public class BotControl : MonoBehaviour
         bool doRotation;
         if (isRightControl)
         {
-            doRotation = OVRInput.Get(OVRInput.Button.SecondaryHandTrigger);
+            doRotation = OVRInput.Get(OVRInput.Button.SecondaryThumbstick);
         }
         else
         {
-            doRotation = OVRInput.Get(OVRInput.Button.PrimaryHandTrigger);
+            doRotation = OVRInput.Get(OVRInput.Button.PrimaryThumbstick);
         }
 
         if (doRotation)
