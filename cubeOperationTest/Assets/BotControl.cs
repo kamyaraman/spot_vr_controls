@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class BotControl : MonoBehaviour
 {
     public bool isRightControl;
-    OVRInput.Controller controller;
 
     public Transform arm, jaw, cameraRig;
     public Transform controllerAnchor;
@@ -21,6 +22,8 @@ public class BotControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OVRInput.Controller controller = isRightControl ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch; 
+
         Vector2 action;
         if (isRightControl)
         {
