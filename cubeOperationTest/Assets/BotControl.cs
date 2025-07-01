@@ -7,8 +7,10 @@ public class BotControl : MonoBehaviour
     public bool isRightControl;
     OVRInput.Controller controller;
 
-    public Transform arm, jaw;
+    public Transform arm, jaw, cameraRig;
     public Transform controllerAnchor;
+
+    private Vector3? oldCameraPos;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +71,16 @@ public class BotControl : MonoBehaviour
         if (moveArm)
         {
             arm.rotation = Quaternion.LookRotation(controllerAnchor.position - Camera.main.transform.position);
+            if (oldCameraPos == null)
+            {
+                oldCameraPos = cameraRig.position;
+            }
+            cameraRig.position = transform.position;
+        }
+        else if (oldCameraPos.HasValue)
+        {
+            cameraRig.position = oldCameraPos.Value;
+            oldCameraPos = null;
         }
 
         float grip;

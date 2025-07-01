@@ -5602,6 +5602,7 @@ MonoBehaviour:
   isRightControl: 0
   arm: {fileID: 770689944}
   jaw: {fileID: 1901205341}
+  cameraRig: {fileID: 641708473}
   controllerAnchor: {fileID: 363747349}
 --- !u!1 &745930062
 GameObject:
@@ -11074,6 +11075,7 @@ MonoBehaviour:
   isRightControl: 1
   arm: {fileID: 727040978}
   jaw: {fileID: 430375689}
+  cameraRig: {fileID: 641708473}
   controllerAnchor: {fileID: 1016693234}
 --- !u!1 &1552927254
 GameObject:
