@@ -3497,6 +3497,12 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!4 &430375689 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1636572261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &447685247
 GameObject:
   m_ObjectHideFlags: 0
@@ -5341,6 +5347,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723778955}
   m_CullTransparentMesh: 1
+--- !u!4 &727040978 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4975683529182176160, guid: fca9c2792ce23364f9d455c85bc4e38f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1636572261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &728885461
 GameObject:
   m_ObjectHideFlags: 0
@@ -5502,6 +5514,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Red Spot
       objectReference: {fileID: 0}
+    - target: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6374234917024070883, guid: fca9c2792ce23364f9d455c85bc4e38f,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -5558,7 +5600,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRightControl: 0
-  arm: {fileID: 0}
+  arm: {fileID: 770689944}
+  jaw: {fileID: 1901205341}
+  controllerAnchor: {fileID: 363747349}
 --- !u!1 &745930062
 GameObject:
   m_ObjectHideFlags: 0
@@ -5816,6 +5860,12 @@ SkinnedMeshRenderer:
     m_Center: {x: -3.5085695, y: 0.08475034, z: -0.17565808}
     m_Extent: {x: 0.10651159, y: 0.18774159, z: 0.45612463}
   m_DirtyAABB: 0
+--- !u!4 &770689944 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4975683529182176160, guid: fca9c2792ce23364f9d455c85bc4e38f,
+    type: 3}
+  m_PrefabInstance: {fileID: 730769970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &780848093
 GameObject:
   m_ObjectHideFlags: 0
@@ -11022,7 +11072,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRightControl: 1
-  arm: {fileID: 0}
+  arm: {fileID: 727040978}
+  jaw: {fileID: 430375689}
+  controllerAnchor: {fileID: 1016693234}
 --- !u!1 &1552927254
 GameObject:
   m_ObjectHideFlags: 0
@@ -13058,7 +13110,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836557538}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6064ea5f34f5214eb5d8bb7335e6ac9, type: 3}
   m_Name: 
@@ -13083,7 +13135,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836557538}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -13187,7 +13239,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1836557538}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61b8e3e60225242b2a0478a67de80905, type: 3}
   m_Name: 
@@ -13874,6 +13926,12 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.008976316, y: -0.064772196, z: -0.067473285}
     m_Extent: {x: 0.0043462086, y: 0.006806761, z: 0.0068782493}
   m_DirtyAABB: 0
+--- !u!4 &1901205341 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5841494285676330964, guid: fca9c2792ce23364f9d455c85bc4e38f,
+    type: 3}
+  m_PrefabInstance: {fileID: 730769970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1914780516
 GameObject:
   m_ObjectHideFlags: 0

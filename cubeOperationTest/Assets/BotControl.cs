@@ -7,7 +7,7 @@ public class BotControl : MonoBehaviour
     public bool isRightControl;
     OVRInput.Controller controller;
 
-    public Transform arm;
+    public Transform arm, jaw;
     public Transform controllerAnchor;
 
     // Start is called before the first frame update
@@ -70,5 +70,16 @@ public class BotControl : MonoBehaviour
         {
             arm.rotation = Quaternion.LookRotation(controllerAnchor.position - Camera.main.transform.position);
         }
+
+        float grip;
+        if (isRightControl)
+        {
+            grip = OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger);
+        }
+        else
+        {
+            grip = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger);
+        }
+        jaw.localEulerAngles = new Vector3(-90f - 90f * grip, 0f, 90f);
     }
 }
