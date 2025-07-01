@@ -7,6 +7,9 @@ public class BotControl : MonoBehaviour
     public bool isRightControl;
     OVRInput.Controller controller;
 
+    public Transform arm;
+    public Transform controllerAnchor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,42 +19,56 @@ public class BotControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 move;
+        Vector2 action;
         if (isRightControl)
         {
-            move = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+            action = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
         }
         else
         {
-            move = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+            action = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
         }
 
-        bool rotate;
+        bool doRotation;
         if (isRightControl)
         {
-            rotate = OVRInput.Get(OVRInput.Button.SecondaryHandTrigger);
+            doRotation = OVRInput.Get(OVRInput.Button.SecondaryHandTrigger);
         }
         else
         {
-            rotate = OVRInput.Get(OVRInput.Button.PrimaryHandTrigger);
+            doRotation = OVRInput.Get(OVRInput.Button.PrimaryHandTrigger);
         }
 
-        if (rotate)
+        if (doRotation)
         {
-            transform.Rotate(Vector3.up, move.x * Time.deltaTime * 100f);
+            transform.Rotate(Vector3.up, action.x * Time.deltaTime * 100f);
             OVRInput.SetControllerVibration(0.5f, 0.7f, controller);
         }
         else
         {
             OVRInput.SetControllerVibration(0, 0, controller);
-            if (Mathf.Abs(move.y) >= Mathf.Abs(move.x))
+            if (Mathf.Abs(action.y) >= Mathf.Abs(action.x))
             {
-                transform.position += transform.forward * move.y * 2f * Time.deltaTime;
+                transform.position += 2f * action.y * Time.deltaTime * transform.forward;
             }
             else
             {
-                transform.position += transform.right * move.x * 2f * Time.deltaTime;
+                transform.position += 2f * action.x * Time.deltaTime * transform.right;
             }
+        }
+
+        bool moveArm;
+        if (isRightControl)
+        {
+            moveArm = OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
+        }
+        else
+        {
+            moveArm = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+        }
+        if (moveArm)
+        {
+            arm.rotation = Quaternion.LookRotation(controllerAnchor.position - Camera.main.transform.position);
         }
     }
 }
