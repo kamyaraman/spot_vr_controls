@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class BotControl : MonoBehaviour
 {
     public bool isRightControl;
-    OVRInput.Controller controller;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,7 @@ public class BotControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OVRInput.Controller controller = isRightControl ? OVRInput.Controller.RTouch : OVRInput.Controller.LTouch; 
         Vector2 move;
         if (isRightControl)
         {
