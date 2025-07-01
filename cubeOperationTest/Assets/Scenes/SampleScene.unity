@@ -13177,6 +13177,7 @@ GameObject:
   - component: {fileID: 1836557540}
   - component: {fileID: 1836557541}
   - component: {fileID: 1836557542}
+  - component: {fileID: 1836557543}
   m_Layer: 0
   m_Name: Locomotion
   m_TagString: Untagged
@@ -13328,6 +13329,20 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1836557543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836557538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b8e3e60225242b2a0478a67de80905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHand: {fileID: 1016693234}
+  cameraRig: {fileID: 641708473}
 --- !u!1 &1843073826
 GameObject:
   m_ObjectHideFlags: 0
