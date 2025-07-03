@@ -1,42 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class CameraManager : MonoBehaviour
 {
-    public GameObject xrRig;              // Your XR Rig GameObject (e.g., XR Origin or OVRCameraRig)
-    public Camera objectCamera;           // The single camera on your object
+    public Transform xrRig;                  // Your XR Origin or OVRCameraRig
+    public Transform targetCameraTransform;  // The camera to teleport to
+    public bool useParenting = true;         // If true, parent the rig to follow
+    private bool isTeleported = false;
 
-    private bool isObjectView = false;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+    private Transform originalParent;
 
-    void Start()
+
+    private void Start()
     {
-        xrRig.SetActive(true);
-        objectCamera.enabled = false;
-
-        // Ensure only one AudioListener is active
-        if (objectCamera.TryGetComponent<AudioListener>(out var audioListener))
+        xrRig.position = Vector3.zero; 
+        xrRig.rotation = Quaternion.identity;
+        isTeleported = false; 
+    }
+    void Update()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.Three))
         {
-            audioListener.enabled = false;
+            ToggleTeleport();
+        }
+
+        // If using scripted follow mode
+        if (isTeleported && !useParenting)
+        {
+            xrRig.position = targetCameraTransform.position;
+            xrRig.rotation = targetCameraTransform.rotation;
         }
     }
 
-    void Update()
+    void ToggleTeleport()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (!isTeleported)
         {
-            isObjectView = !isObjectView;
+            // Save original state
+            originalPosition = xrRig.position;
+            originalRotation = xrRig.rotation;
+            originalParent = xrRig.parent;
 
-            xrRig.SetActive(!isObjectView);
-            objectCamera.enabled = isObjectView;
+            // Move XR rig to target
+            xrRig.position = targetCameraTransform.position;
+            xrRig.rotation = targetCameraTransform.rotation;
 
-            // AudioListener toggle
-            if (objectCamera.TryGetComponent<AudioListener>(out var audioListener))
-            {
-                audioListener.enabled = isObjectView;
-            }
+            if (useParenting)
+                xrRig.SetParent(targetCameraTransform);
+
+            isTeleported = true;
+        }
+        else
+        {
+            // Restore original state
+            if (useParenting)
+                xrRig.SetParent(originalParent);
+
+            xrRig.position = originalPosition;
+            xrRig.rotation = originalRotation;
+
+            isTeleported = false;
         }
     }
 }
+

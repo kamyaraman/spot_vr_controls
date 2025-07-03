@@ -18,16 +18,13 @@ public class CollisionWarning : MonoBehaviour
         {
             redFlasher.Flash();
         }
+        source.clip = clip; 
+        source.Play();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        RaycastHit hit; 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f))
-        {
-
-        }                                                                    
+    {                                                              
         
     }
 }
