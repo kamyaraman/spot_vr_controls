@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using RosSharp.RosBridgeClient;
 using TMPro;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public abstract class ControlFlow
@@ -10,6 +9,7 @@ public abstract class ControlFlow
     public SpotInterface spotOne;
     public TMP_Text[] labels;
     public GameObject dummyGripper;
+    public TMP_Text infoText;
 
     public enum Button { A, B, X, Y };
     public enum ButtonState { Down, Held, Up };
@@ -33,10 +33,10 @@ public abstract class ControlFlow
 
     private readonly Dictionary<Tuple<Button, ButtonState>, Action> buttonListeners = new();
     private readonly Dictionary<Button, Func<string>> labelGetters = new();
+    private Func<string> infoGetter = null;
 
     public void SuperUpdate()
     {
-        Debug.Log(OVRInput.Get(OVRInput.Button.Three));
         foreach (var kvp in buttonListeners)
         {
             var ovrButton = buttonOvrMapping[kvp.Key.Item1];
@@ -56,6 +56,11 @@ public abstract class ControlFlow
             labels[labelIndex].text = kvp.Value();
         }
 
+        if (infoGetter != null)
+        {
+            infoText.text = infoGetter();
+        }
+
         Update();
     }  
 
@@ -69,6 +74,11 @@ public abstract class ControlFlow
         labelGetters[button] = getter;
     }
 
+    public void SetInfoGetter(Func<string> infoGetter)
+    {
+        this.infoGetter = infoGetter;
+    }
+
     public abstract void Start();
 
     public abstract void Update();
@@ -79,10 +89,14 @@ public class SpotInterface
     private readonly MoveSpot move;
     private readonly SetGripper gripper;
 
-    public SpotInterface(GameObject rosConnector)
+    private readonly GameObject dummyGripper;
+
+    public SpotInterface(GameObject rosConnector, GameObject dummyGripper)
     {
         move = rosConnector.GetComponent<MoveSpot>();
         gripper = rosConnector.GetComponent<SetGripper>();
+
+        this.dummyGripper = dummyGripper;
     }
 
     public void Drive(Vector2 direction)
@@ -96,5 +110,15 @@ public class SpotInterface
             gripper.openGripper();
         else
             gripper.closeGripper();
+    }
+
+    public Vector3 GetGripperPos()
+    {
+        return dummyGripper.transform.position;
+    }
+
+    public void SetGripperPos(Vector3 pos)
+    {
+        dummyGripper.transform.position = pos;
     }
 }

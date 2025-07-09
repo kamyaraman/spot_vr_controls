@@ -24,8 +24,17 @@ public class SampleFlow : ControlFlow
         //SetButtonListener(Button.X, ButtonState.Down, () => spotOne.SetGripperOpen(true));
         //SetButtonListener(Button.Y, ButtonState.Down, () => spotOne.SetGripperOpen(false));
 
-        SetButtonListener(Button.X, ButtonState.Down, () => dummyGripper.transform.position += new Vector3(0f, 0.1f, 0.1f));
-        SetButtonListener(Button.Y, ButtonState.Down, () => dummyGripper.transform.position -= new Vector3(0f, 0.1f, 0.1f));
+        SetButtonListener(Button.X, ButtonState.Down, () => spotOne.SetGripperPos(spotOne.GetGripperPos() + new Vector3(0f, 0.1f, 0.1f)));
+        SetButtonListener(Button.Y, ButtonState.Down, () => spotOne.SetGripperPos(spotOne.GetGripperPos() - new Vector3(0f, 0.1f, 0.1f)));
+
+        SetInfoGetter(() =>
+        {
+            if (direction == 1)
+                return "Going forward";
+            if (direction == -1)
+                return "Going backward";
+            return "";
+        });
     }
 
     public override void Update()
