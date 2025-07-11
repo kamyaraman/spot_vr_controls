@@ -1,44 +1,79 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SampleFlow : ControlFlow
+public class SampleDriveFlow : ControlFlow
 {
-    private int direction = 0;
-
     public override void Start()
     {
-        SetButtonListener(Button.A, ButtonState.Held, () => {
-            spotOne.Drive(new(0f, 1f));
-            direction = 1;
+        ComputedVar<bool> doRotateAndYMove = new(
+            () => GetButton(Button.Trigger, ButtonState.Held));
+
+        SetJoystickListener(JoystickState.Active,
+            direction =>
+            {
+                if (doRotateAndYMove.Eval())
+                {
+                    spot.Rotate(direction.x);
+                    spot.SetHeight(spot.GetHeight() + direction.y);
+                }
+                else
+                {
+                    spot.Drive(direction);
+                }
             });
-        SetButtonListener(Button.B, ButtonState.Held, () => {
-            spotOne.Drive(new(0f, -1f));
-            direction = -1;
-        });
-        SetButtonListener(Button.A, ButtonState.Up, () => direction = 0);
-        SetButtonListener(Button.B, ButtonState.Up, () => direction = 0);
 
-        SetLabelGetter(Button.A, () => direction == 1 ? "Going forward" : "Forward");
-        SetLabelGetter(Button.B, () => direction == -1 ? "Going backward" : "Backward");
+        SetButtonListener(Button.AOrX, ButtonState.Down,
+            () => Transition(new SampleArmFlow()));
 
-        //SetButtonListener(Button.X, ButtonState.Down, () => spotOne.SetGripperOpen(true));
-        //SetButtonListener(Button.Y, ButtonState.Down, () => spotOne.SetGripperOpen(false));
-
-        SetButtonListener(Button.X, ButtonState.Down, () => spotOne.SetGripperPos(spotOne.GetGripperPos() + new Vector3(0f, 0.1f, 0.1f)));
-        SetButtonListener(Button.Y, ButtonState.Down, () => spotOne.SetGripperPos(spotOne.GetGripperPos() - new Vector3(0f, 0.1f, 0.1f)));
-
-        SetInfoGetter(() =>
-        {
-            if (direction == 1)
-                return "Going forward";
-            if (direction == -1)
-                return "Going backward";
-            return "";
-        });
+        SetLabelGetter(Button.Joystick,
+            () =>
+            {
+                if (doRotateAndYMove.Eval())
+                    return "Rotate and Y-Move";
+                else
+                    return "Drive";
+            });
+        SetLabelGetter(Button.Trigger,
+            () =>
+            {
+                if (doRotateAndYMove.Eval())
+                    return "";
+                else
+                    return "Rotate and Y-Move";
+            });
+        SetLabelGetter(Button.AOrX, () => "Move Arm");
     }
 
     public override void Update()
     {
 
+    }
+}
+
+public class SampleArmFlow : ControlFlow
+{
+    public override void Start()
+    {
+        SetHandListener(pos => spot.SetGripperPos(pos));
+
+        SetButtonListener(Button.Trigger, ButtonState.Down,
+            () => spot.SetGripperOpen(!spot.GetGripperOpen()));
+
+        SetButtonListener(Button.AOrX, ButtonState.Down,
+            () => Transition(new SampleDriveFlow()));
+
+        SetLabelGetter(Button.Trigger,
+            () =>
+            {
+                if (spot.GetGripperOpen())
+                    return "Close Claw";
+                else
+                    return "Open Claw";
+            });
+        SetLabelGetter(Button.AOrX, () => "Move Spot");
+    }
+
+    public override void Update()
+    {
+        
     }
 }

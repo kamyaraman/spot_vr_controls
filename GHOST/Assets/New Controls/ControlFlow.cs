@@ -6,34 +6,56 @@ using UnityEngine;
 
 public abstract class ControlFlow
 {
-    public SpotInterface spotOne;
-    public TMP_Text[] labels;
-    public GameObject dummyGripper;
-    public TMP_Text infoText;
-
-    public enum Button { A, B, X, Y };
+    public enum Button { AOrX, BOrY, Joystick, Trigger, Grip };
     public enum ButtonState { Down, Held, Up };
 
-    public enum Joystick { Left, Right };
     public enum JoystickState { Active, Idle };
 
-    private readonly Dictionary<Button, OVRInput.Button> buttonOvrMapping = new()
+    public SpotInterface spot;
+
+    private Dictionary<Button, OVRInput.Button> buttonOvrMapping;
+    private OVRInput.Axis2D joystickOvr;
+    private GameObject handAnchor;
+    private TMP_Text[] labels;
+    private Action<ControlFlow> managerTransition;
+
+    private Dictionary<Tuple<Button, ButtonState>, Action> buttonListeners;
+    private Dictionary<JoystickState, Action<Vector2>> joystickListeners;
+    private Action<Vector3> handListener;
+    private Dictionary<Button, Func<string>> labelGetters;
+
+    private readonly Button[] labelOrder =
     {
-        { Button.A, OVRInput.Button.One },
-        { Button.B, OVRInput.Button.Two },
-        { Button.X, OVRInput.Button.Three },
-        { Button.Y, OVRInput.Button.Four }
+        Button.AOrX,
+        Button.BOrY,
+        Button.Joystick,
+        Button.Trigger
     };
 
-    private readonly Dictionary<Button, int> labelIndices = new()
+    public void SuperStart(
+        SpotInterface spot,
+        Dictionary<Button, OVRInput.Button> buttonOvrMapping,
+        OVRInput.Axis2D joystickOvr,
+        GameObject handAnchor,
+        TMP_Text[] labels,
+        Action<ControlFlow> managerTransition
+        )
     {
-        { Button.A, 0 },
-        { Button.B, 1 }
-    };
+        this.spot = spot;
 
-    private readonly Dictionary<Tuple<Button, ButtonState>, Action> buttonListeners = new();
-    private readonly Dictionary<Button, Func<string>> labelGetters = new();
-    private Func<string> infoGetter = null;
+        this.buttonOvrMapping = buttonOvrMapping;
+        this.joystickOvr = joystickOvr;
+        this.handAnchor = handAnchor;
+        this.labels = labels;
+        this.managerTransition = managerTransition;
+
+        buttonListeners = new();
+        joystickListeners = new();
+        handListener = null;
+        labelGetters = new();
+
+        Start();
+    }
 
     public void SuperUpdate()
     {
@@ -50,15 +72,21 @@ public abstract class ControlFlow
                 kvp.Value();
         }
 
-        foreach (var kvp in labelGetters)
-        {
-            var labelIndex = labelIndices[kvp.Key];
-            labels[labelIndex].text = kvp.Value();
-        }
+        var joystickPos = OVRInput.Get(joystickOvr);
+        var joystickState = joystickPos.magnitude > 0.1f ? JoystickState.Active : JoystickState.Idle;
+        if (joystickListeners.ContainsKey(joystickState))
+            joystickListeners[joystickState](joystickPos);
 
-        if (infoGetter != null)
+        if (handListener != null)
+            handListener(handAnchor.transform.position);
+
+        for (int i = 0; i < labelOrder.Length; i++)
         {
-            infoText.text = infoGetter();
+            var button = labelOrder[i];
+            if (labelGetters.ContainsKey(button))
+                labels[i].text = labelGetters[button]();
+            else
+                labels[i].text = "";
         }
 
         Update();
@@ -69,14 +97,32 @@ public abstract class ControlFlow
         buttonListeners[new(button, buttonState)] = listener;    
     }
 
+    public void SetJoystickListener(JoystickState joystickState, Action<Vector2> listener)
+    {
+        joystickListeners[joystickState] = listener;
+    }
+
+    public void SetHandListener(Action<Vector3> listener)
+    {
+        handListener = listener;
+    }
+
     public void SetLabelGetter(Button button, Func<string> getter)
     {
         labelGetters[button] = getter;
     }
 
-    public void SetInfoGetter(Func<string> infoGetter)
+    public bool GetButton(Button button, ButtonState state)
     {
-        this.infoGetter = infoGetter;
+        var ovrButton = buttonOvrMapping[button];
+        return state == ButtonState.Down && OVRInput.GetDown(ovrButton) ||
+            state == ButtonState.Held && OVRInput.Get(ovrButton) ||
+            state == ButtonState.Up && OVRInput.GetUp(ovrButton);
+    }
+
+    public void Transition(ControlFlow otherFlow)
+    {
+        managerTransition(otherFlow);
     }
 
     public abstract void Start();
@@ -91,12 +137,18 @@ public class SpotInterface
 
     private readonly GameObject dummyGripper;
 
+    private bool isGripperOpen = false;
+    private float height = 0f;
+
     public SpotInterface(GameObject rosConnector, GameObject dummyGripper)
     {
         move = rosConnector.GetComponent<MoveSpot>();
         gripper = rosConnector.GetComponent<SetGripper>();
 
         this.dummyGripper = dummyGripper;
+
+        SetGripperOpen(false);
+        SetHeight(0f);
     }
 
     public void Drive(Vector2 direction)
@@ -104,12 +156,34 @@ public class SpotInterface
         move.drive(direction, 0f, 0f);
     }
 
-    public void SetGripperOpen(bool open)
+    public void Rotate(float direction)
     {
-        if (open)
+        move.drive(new(0f, 0f), direction, 0f);
+    }
+
+    public bool GetGripperOpen()
+    {
+        return isGripperOpen;
+    }
+
+    public void SetGripperOpen(bool isGripperOpen)
+    {
+        if (isGripperOpen)
             gripper.openGripper();
         else
             gripper.closeGripper();
+        this.isGripperOpen = isGripperOpen;
+    }
+
+    public float GetHeight()
+    {
+        return height;
+    }
+
+    public void SetHeight(float height)
+    {
+        move.drive(new(0f, 0f), 0f, height);
+        this.height = height;
     }
 
     public Vector3 GetGripperPos()
@@ -120,5 +194,20 @@ public class SpotInterface
     public void SetGripperPos(Vector3 pos)
     {
         dummyGripper.transform.position = pos;
+    }
+}
+
+public class ComputedVar<T>
+{
+    private readonly Func<T> getter;
+
+    public ComputedVar(Func<T> getter)
+    {
+        this.getter = getter;
+    }
+
+    public T Eval()
+    {
+        return getter();
     }
 }
