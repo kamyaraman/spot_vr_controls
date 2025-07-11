@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SampleDriveFlow : ControlFlow
@@ -12,8 +13,10 @@ public class SampleDriveFlow : ControlFlow
             {
                 if (doRotateAndYMove.Eval())
                 {
-                    spot.Rotate(direction.x);
-                    spot.SetHeight(spot.GetHeight() + direction.y);
+                    if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
+                        spot.Rotate(direction.x);
+                    else
+                        spot.SetHeight(spot.GetHeight() + direction.y);
                 }
                 else
                 {
@@ -41,11 +44,20 @@ public class SampleDriveFlow : ControlFlow
                     return "Rotate and Y-Move";
             });
         SetLabelGetter(Button.AOrX, () => "Move Arm");
+
+        SetButtonListener(Button.BOrY, ButtonState.Down, () => AddInfoLine("hello", TimeSpan.FromSeconds(3)));
+
+        SetHandColorGetter(() => Color.purple);
     }
 
     public override void Update()
     {
 
+    }
+
+    public override string GetName()
+    {
+        return "Drive Mode";
     }
 }
 
@@ -70,10 +82,17 @@ public class SampleArmFlow : ControlFlow
                     return "Open Claw";
             });
         SetLabelGetter(Button.AOrX, () => "Move Spot");
+
+        SetHandColorGetter(() => Color.yellow);
     }
 
     public override void Update()
     {
         
+    }
+
+    public override string GetName()
+    {
+        return "Arm Mode";
     }
 }

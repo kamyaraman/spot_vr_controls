@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using RosSharp.RosBridgeClient;
 using TMPro;
 using UnityEngine;
@@ -16,13 +17,18 @@ public abstract class ControlFlow
     private Dictionary<Button, OVRInput.Button> buttonOvrMapping;
     private OVRInput.Axis2D joystickOvr;
     private GameObject handAnchor;
+    private SkinnedMeshRenderer handRenderer;
     private TMP_Text[] labels;
+    private TMP_Text infoText;
     private Action<ControlFlow> managerTransition;
 
     private Dictionary<Tuple<Button, ButtonState>, Action> buttonListeners;
     private Dictionary<JoystickState, Action<Vector2>> joystickListeners;
-    private Action<Vector3> handListener;
+    private Action<Transform> handListener;
+    private Func<Color> handColorGetter;
     private Dictionary<Button, Func<string>> labelGetters;
+
+    private List<Tuple<string, DateTime>> infoTextLines;
 
     private readonly Button[] labelOrder =
     {
@@ -37,7 +43,9 @@ public abstract class ControlFlow
         Dictionary<Button, OVRInput.Button> buttonOvrMapping,
         OVRInput.Axis2D joystickOvr,
         GameObject handAnchor,
+        SkinnedMeshRenderer handRenderer,
         TMP_Text[] labels,
+        TMP_Text infoText,
         Action<ControlFlow> managerTransition
         )
     {
@@ -46,13 +54,21 @@ public abstract class ControlFlow
         this.buttonOvrMapping = buttonOvrMapping;
         this.joystickOvr = joystickOvr;
         this.handAnchor = handAnchor;
+        this.handRenderer = handRenderer;
         this.labels = labels;
+        this.infoText = infoText;
         this.managerTransition = managerTransition;
 
         buttonListeners = new();
         joystickListeners = new();
         handListener = null;
+        handColorGetter = null;
         labelGetters = new();
+
+        infoTextLines = new()
+        {
+            new("Entered " + GetName(), DateTime.Now.AddSeconds(3))
+        }; 
 
         Start();
     }
@@ -78,7 +94,12 @@ public abstract class ControlFlow
             joystickListeners[joystickState](joystickPos);
 
         if (handListener != null)
-            handListener(handAnchor.transform.position);
+            handListener(handAnchor.transform);
+
+        if (handColorGetter != null)
+            handRenderer.material.color = handColorGetter();
+        else
+            handRenderer.material.color = Color.white;
 
         for (int i = 0; i < labelOrder.Length; i++)
         {
@@ -88,6 +109,9 @@ public abstract class ControlFlow
             else
                 labels[i].text = "";
         }
+
+        infoTextLines = infoTextLines.Where(l => l.Item2 > DateTime.Now).ToList();
+        infoText.text = string.Join("\n", infoTextLines.Select(l => l.Item1));
 
         Update();
     }  
@@ -102,14 +126,24 @@ public abstract class ControlFlow
         joystickListeners[joystickState] = listener;
     }
 
-    public void SetHandListener(Action<Vector3> listener)
+    public void SetHandListener(Action<Transform> listener)
     {
         handListener = listener;
+    }
+
+    public void SetHandColorGetter(Func<Color> getter)
+    {
+        handColorGetter = getter;
     }
 
     public void SetLabelGetter(Button button, Func<string> getter)
     {
         labelGetters[button] = getter;
+    }
+
+    public void AddInfoLine(string text, TimeSpan duration)
+    {
+        infoTextLines.Add(new(text, DateTime.Now + duration));
     }
 
     public bool GetButton(Button button, ButtonState state)
@@ -128,6 +162,8 @@ public abstract class ControlFlow
     public abstract void Start();
 
     public abstract void Update();
+
+    public abstract string GetName();
 }
 
 public class SpotInterface
@@ -182,6 +218,7 @@ public class SpotInterface
 
     public void SetHeight(float height)
     {
+        height = Mathf.Clamp(height, -1f, 1f);
         move.drive(new(0f, 0f), 0f, height);
         this.height = height;
     }
@@ -191,9 +228,10 @@ public class SpotInterface
         return dummyGripper.transform.position;
     }
 
-    public void SetGripperPos(Vector3 pos)
+    public void SetGripperPos(Transform tf)
     {
-        dummyGripper.transform.position = pos;
+        dummyGripper.transform.position = tf.position;
+        dummyGripper.transform.rotation = tf.rotation;
     }
 }
 
