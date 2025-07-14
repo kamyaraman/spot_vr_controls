@@ -28,7 +28,7 @@ public abstract class ControlFlow
     private Func<Color> handColorGetter;
     private Dictionary<Button, Func<string>> labelGetters;
 
-    private List<Tuple<string, DateTime>> infoTextLines;
+    public List<Tuple<string, DateTime>> infoTextLines = new();
 
     private readonly Button[] labelOrder =
     {
@@ -46,6 +46,7 @@ public abstract class ControlFlow
         SkinnedMeshRenderer handRenderer,
         TMP_Text[] labels,
         TMP_Text infoText,
+        List<Tuple<string, DateTime>> infoTextLines,
         Action<ControlFlow> managerTransition
         )
     {
@@ -65,10 +66,8 @@ public abstract class ControlFlow
         handColorGetter = null;
         labelGetters = new();
 
-        infoTextLines = new()
-        {
-            new("Entered " + GetName(), DateTime.Now.AddSeconds(3))
-        }; 
+        this.infoTextLines = infoTextLines;
+        this.infoTextLines.Add(new("Entered " + GetName(), DateTime.Now.AddSeconds(3)));
 
         Start();
     }
@@ -171,17 +170,19 @@ public class SpotInterface
     private readonly MoveSpot move;
     private readonly SetGripper gripper;
 
-    private readonly GameObject dummyGripper;
+    private readonly GameObject dummyGripper, gripperView;
 
     private bool isGripperOpen = false;
     private float height = 0f;
+    private int gripperUsers = 0;
 
-    public SpotInterface(GameObject rosConnector, GameObject dummyGripper)
+    public SpotInterface(GameObject rosConnector, GameObject dummyGripper, GameObject gripperView)
     {
         move = rosConnector.GetComponent<MoveSpot>();
         gripper = rosConnector.GetComponent<SetGripper>();
 
         this.dummyGripper = dummyGripper;
+        this.gripperView = gripperView;
 
         SetGripperOpen(false);
         SetHeight(0f);
@@ -195,6 +196,21 @@ public class SpotInterface
     public void Rotate(float direction)
     {
         move.drive(new(0f, 0f), direction, 0f);
+    }
+
+    public void SetUsingGripper(bool isUsing)
+    {
+        if (isUsing)
+            gripperUsers++;
+        else
+            gripperUsers--;
+
+        gripperView.SetActive(gripperUsers > 0);
+    }
+
+    public bool IsGripperInUse()
+    {
+        return gripperUsers > 0;
     }
 
     public bool GetGripperOpen()
@@ -230,8 +246,7 @@ public class SpotInterface
 
     public void SetGripperPos(Transform tf)
     {
-        dummyGripper.transform.position = tf.position;
-        dummyGripper.transform.rotation = tf.rotation;
+        dummyGripper.transform.SetPositionAndRotation(tf.position, tf.rotation);
     }
 }
 

@@ -6,8 +6,8 @@ public class ControlFlowManager : MonoBehaviour
 {
     private ControlFlow initLeftFlow = new SampleDriveFlow(), initRightFlow = new SampleDriveFlow();
 
-    public GameObject rosConnectorOne, dummyGripperOne,
-        rosConnectorTwo, dummyGripperTwo,
+    public GameObject rosConnectorOne, dummyGripperOne, handViewOne,
+        rosConnectorTwo, dummyGripperTwo, handViewTwo,
         leftHandAnchor, rightHandAnchor;
     public SkinnedMeshRenderer leftHandRenderer, rightHandRenderer;
     public GameObject[] leftLabelObjs, rightLabelObjs;
@@ -36,17 +36,12 @@ public class ControlFlowManager : MonoBehaviour
     private SpotInterface spotOne, spotTwo;
     private TMP_Text[] leftLabels, rightLabels;
 
-    public Color controllerColor = Color.red; // Set your desired color here
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Attempt to find both left and right controller models
-        ChangeControllerColor("LeftControllerAnchor");
-        ChangeControllerColor("RightControllerAnchor");
 
-        spotOne = new(rosConnectorOne, dummyGripperOne);
-        spotTwo = new(rosConnectorTwo, dummyGripperTwo);
+        spotOne = new(rosConnectorOne, dummyGripperOne, handViewOne);
+        spotTwo = new(rosConnectorTwo, dummyGripperTwo, handViewTwo);
 
         leftLabels = new TMP_Text[leftLabelObjs.Length];
         for (int i = 0; i < leftLabelObjs.Length; i++)
@@ -56,39 +51,10 @@ public class ControlFlowManager : MonoBehaviour
         for (int i = 0; i < rightLabelObjs.Length; i++)
             rightLabels[i] = GetLabel(rightLabelObjs[i]);
 
+        leftFlow = initLeftFlow;
+        rightFlow = initRightFlow;
         TransitionLeft(initLeftFlow);
         TransitionRight(initRightFlow);
-    }
-
-    void ChangeControllerColor(string controllerAnchorName)
-    {
-        // Look for the controller anchor in the scene (children of OVRCameraRig)
-        Transform anchor = GameObject.Find(controllerAnchorName)?.transform;
-
-        if (anchor == null)
-        {
-            Debug.LogWarning($"Controller anchor '{controllerAnchorName}' not found.");
-            return;
-        }
-
-        // Find the MeshRenderer or SkinnedMeshRenderer in children
-        Renderer renderer = anchor.GetComponentInChildren<SkinnedMeshRenderer>();
-        if (renderer == null)
-            renderer = anchor.GetComponentInChildren<MeshRenderer>();
-
-        if (renderer != null)
-        {
-            // Clone the material so we don’t change the global shared material
-            Material matInstance = new Material(renderer.material);
-            matInstance.color = controllerColor;
-            renderer.material = matInstance;
-
-            Debug.Log($"{controllerAnchorName} color changed to {controllerColor}");
-        }
-        else
-        {
-            Debug.LogWarning($"No renderer found under {controllerAnchorName}");
-        }
     }
 
     private TMP_Text GetLabel(GameObject obj)
@@ -106,6 +72,7 @@ public class ControlFlowManager : MonoBehaviour
             leftHandRenderer,
             leftLabels,
             leftInfoText,
+            leftFlow.infoTextLines,
             TransitionLeft
             );
         leftFlow = flow;
@@ -121,6 +88,7 @@ public class ControlFlowManager : MonoBehaviour
            rightHandRenderer,
            rightLabels,
            rightInfoText,
+           rightFlow.infoTextLines,
            TransitionRight
            );
         rightFlow = flow;

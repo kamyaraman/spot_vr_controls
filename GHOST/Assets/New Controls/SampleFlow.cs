@@ -25,7 +25,12 @@ public class SampleDriveFlow : ControlFlow
             });
 
         SetButtonListener(Button.AOrX, ButtonState.Down,
-            () => Transition(new SampleArmFlow()));
+            () => {
+                if (!spot.IsGripperInUse())
+                    Transition(new SampleArmFlow());
+                else
+                    AddInfoLine("Error: Arm in Use!", TimeSpan.FromSeconds(3));
+            });
 
         SetLabelGetter(Button.Joystick,
             () =>
@@ -45,8 +50,6 @@ public class SampleDriveFlow : ControlFlow
             });
         SetLabelGetter(Button.AOrX, () => "Move Arm");
 
-        SetButtonListener(Button.BOrY, ButtonState.Down, () => AddInfoLine("hello", TimeSpan.FromSeconds(3)));
-
         SetHandColorGetter(() => Color.purple);
     }
 
@@ -65,13 +68,18 @@ public class SampleArmFlow : ControlFlow
 {
     public override void Start()
     {
+        spot.SetUsingGripper(true);
+
         SetHandListener(pos => spot.SetGripperPos(pos));
 
         SetButtonListener(Button.Trigger, ButtonState.Down,
             () => spot.SetGripperOpen(!spot.GetGripperOpen()));
 
         SetButtonListener(Button.AOrX, ButtonState.Down,
-            () => Transition(new SampleDriveFlow()));
+            () => {
+                spot.SetUsingGripper(false);
+                Transition(new SampleDriveFlow());
+            });
 
         SetLabelGetter(Button.Trigger,
             () =>

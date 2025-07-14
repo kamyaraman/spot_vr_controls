@@ -10101,7 +10101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1046589682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10222,7 +10222,7 @@ Transform:
   m_GameObject: {fileID: 1046589681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10439,8 +10439,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rosConnectorOne: {fileID: 2123763348}
   dummyGripperOne: {fileID: 244727969}
+  handViewOne: {fileID: 1046589681}
   rosConnectorTwo: {fileID: 669083912}
   dummyGripperTwo: {fileID: 1681050000}
+  handViewTwo: {fileID: 0}
   leftHandAnchor: {fileID: 1843185003}
   rightHandAnchor: {fileID: 1774275838}
   leftHandRenderer: {fileID: 320381276}
@@ -10457,7 +10459,6 @@ MonoBehaviour:
   - {fileID: 54220014}
   leftInfoText: {fileID: 111858145}
   rightInfoText: {fileID: 1339713783}
-  controllerColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1103048502
 GameObject:
   m_ObjectHideFlags: 0
