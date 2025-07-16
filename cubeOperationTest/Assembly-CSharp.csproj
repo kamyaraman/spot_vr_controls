@@ -52,6 +52,7 @@
     <Compile Include="Assets\ShowWhenLookedAt.cs" />
     <Compile Include="Assets\BotControl.cs" />
     <Compile Include="Assets\moveCube.cs" />
+    <Compile Include="Assets\ToggleMenu.cs" />
     <Compile Include="Assets\DualDriveMapping.cs" />
     <Compile Include="Assets\CollisionWarning.cs" />
     <Compile Include="Assets\AudioCues.cs" />
@@ -62,8 +63,10 @@
     <Compile Include="Assets\Labeller.cs" />
     <Compile Include="Assets\ComplexControlMapping.cs" />
     <Compile Include="Assets\RedFlasher.cs" />
+    <Compile Include="Assets\TankDriveMapping.cs" />
     <Compile Include="Assets\RigidbodyBotControl.cs" />
     <Compile Include="Assets\SimpleControlMapping.cs" />
+    <Compile Include="Assets\MappingManager.cs" />
     <Compile Include="Assets\CameraManager.cs" />
   </ItemGroup>
   <ItemGroup>
